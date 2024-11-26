@@ -9,7 +9,7 @@ export default function Test() {
 
     return <div>
         <Intro userDb={userDb} setUserDb={setUserDb}/>
-        { imageDb.images.map((image, id) => <ImageCard id={id} key={makeImageCardId(id)} userDb={userDb} setUserDb={setUserDb}/>) }
+        { imageDb.images.map((_, id) => <ImageCard id={id} key={makeImageCardId(id)} userDb={userDb} setUserDb={setUserDb}/>) }
         <Results userDb={userDb} setUserDb={setUserDb}/>
     </div>;
 }
