@@ -15,3 +15,8 @@ export interface ImageDb {
 }
 
 export default imageDb as ImageDb;
+
+export function getImageUrl(id: number, image: Image): string {
+    return "/images/" + id + "." + image.extension;
+    // return image.url;
+}

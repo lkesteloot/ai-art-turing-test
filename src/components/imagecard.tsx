@@ -3,7 +3,7 @@ import { useState } from "react";
 import Buttons from "./buttons";
 import Button from "./button";
 import CheckedButton from "./checked_button";
-import db, { Image } from "../services/imagedb";
+import db, { Image, getImageUrl } from "../services/imagedb";
 import {UserDb, withGuess} from "../services/userdb";
 import {Guess, GUESS_TO_STRING, isHumanToAnswer} from "../services/types";
 
@@ -41,7 +41,7 @@ export default function ImageCard({
 
     return <div id={makeImageCardId(id)} className="min-h-screen flex snap-center">
         <div className="grow max-h-screen">
-            <img className="w-full h-full object-contain" src={image.url} alt={image.title}/>
+            <img className="w-full h-full object-contain" src={getImageUrl(id, image)} alt={image.title}/>
         </div>
         <div className="w-96 p-4">
             <div className="text-center">
