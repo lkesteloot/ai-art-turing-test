@@ -39,7 +39,7 @@ export default function ImageCard({
         setUserDb(withGuess(userDb, id, newGuess));
     }
 
-    return <div id={makeImageCardId(id)} className="min-h-screen flex snap-center">
+    return <section id={makeImageCardId(id)} className="min-h-screen flex snap-center">
         <div className="grow max-h-screen">
             <img className="w-full h-full object-contain" src={getImageUrl(id, image)} alt={image.title}/>
         </div>
@@ -71,5 +71,5 @@ export default function ImageCard({
                     : <Button href="#results">Results</Button> }
             </Buttons>
         </div>
-    </div>;
+    </section>;
 }

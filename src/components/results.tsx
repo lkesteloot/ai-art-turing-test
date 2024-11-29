@@ -18,7 +18,7 @@ export default function Results({
         }
     }
 
-    return <div id="results" className="min-h-screen snap-center">
+    return <section id="results" className="min-h-screen snap-center">
         Got {correct} right out of {guesses.length}.
-    </div>;
+    </section>;
 }
