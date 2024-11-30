@@ -1,19 +1,26 @@
 import db from "./imagedb";
-import {Guess} from "./types";
+import {Guess, QuizMode} from "./types";
 import {useLocalStorage} from "../hooks/uselocalstorage";
 
 const QUESTION_COUNT = db.images.length;
 const USER_DB_KEY = "user_db";
 
 export interface UserDb {
-    autoDisplayAnswer: boolean,
+    quizMode: QuizMode,
     guesses: Guess[],
 }
 
 function makeDefaultUserDb(): UserDb {
     return {
-        autoDisplayAnswer: false,
+        quizMode: "reveal",
         guesses: new Array(QUESTION_COUNT).fill("none"),
+    };
+}
+
+export function withQuizMode(userDb: UserDb, quizMode: QuizMode): UserDb {
+    return {
+        ... userDb,
+        quizMode,
     };
 }
 

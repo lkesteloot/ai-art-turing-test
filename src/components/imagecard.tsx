@@ -6,6 +6,7 @@ import CheckedButton from "./checked_button";
 import db, {Image, getImageUrl, makeImageCardId} from "../services/imagedb";
 import {UserDb, withGuess} from "../services/userdb";
 import {Guess, isHumanToAnswer} from "../services/types";
+import {temporarilyDisableSnap} from "../services/utils.ts";
 
 const QUESTION_COUNT = db.images.length;
 
@@ -27,6 +28,7 @@ export default function ImageCard({
     const image = db.images[id] as Image;
     const guess = userDb.guesses[id];
     const guessIsCorrect = guess === isHumanToAnswer(image.human);
+    const nextUrl = "#" + makeImageCardId(id + 1);
 
     function vote(newGuess: Guess) {
         if (newGuess !== "none" && newGuess === guess) {
@@ -34,6 +36,18 @@ export default function ImageCard({
             newGuess = "none";
         }
         setUserDb(withGuess(userDb, id, newGuess));
+        if (newGuess !== "none") {
+            switch (userDb.quizMode) {
+                case "reveal":
+                    setShowAnswer(true);
+                    break;
+
+                case "advance":
+                    temporarilyDisableSnap();
+                    window.location = nextUrl;
+                    break;
+            }
+        }
     }
 
     return <section id={makeImageCardId(id)} className="min-h-screen flex snap-center">
@@ -65,7 +79,7 @@ export default function ImageCard({
             <div className="grow"></div>
             <Buttons>
                 { id < QUESTION_COUNT - 1
-                    ? <Button href={"#" + makeImageCardId(id + 1)}>Next</Button>
+                    ? <Button href={nextUrl}>Next</Button>
                     : <Button href="#results">Results</Button> }
             </Buttons>
         </div>

@@ -20,7 +20,7 @@ export default function CheckedButton({
                     "opacity-10": !checked,
                 }
             )}>✓</span>
-            <span className="text-lg grow">{children}</span>
+            <span className="grow">{children}</span>
         </div>
     </Button>;
 }

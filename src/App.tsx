@@ -4,6 +4,7 @@ import ImageCard from "./components/imagecard";
 import Intro from "./components/intro";
 import Results from "./components/results";
 import {useUserDb} from "./services/userdb";
+import {temporarilyDisableSnap} from "./services/utils.ts";
 
 export default function App() {
     const [userDb, setUserDb] = useUserDb();
@@ -18,10 +19,7 @@ export default function App() {
             if (element !== null) {
                 const a = element as HTMLAnchorElement;
                 if (a.href !== "") {
-                    document.documentElement.classList.remove("snap-y");
-                    setTimeout(() => {
-                        document.documentElement.classList.add("snap-y");
-                    }, 1000);
+                    temporarilyDisableSnap();
                 }
             }
         }
