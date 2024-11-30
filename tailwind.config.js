@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const plugin = require('tailwindcss/plugin');
+
 export default {
   content: [
       "./index.html",
@@ -7,8 +10,20 @@ export default {
   theme: {
     extend: {},
     backgroundImage: {
-      "radial-gradient": "radial-gradient(circle, var(--tw-gradient-stops))",
+        "circle-gradient": "radial-gradient(circle at center, var(--tw-gradient-stops))",
+        "ellipse-gradient": "radial-gradient(ellipse at center, var(--tw-gradient-stops))",
+    },
+    boxShadow: {
+        "glow": "0 0 10px 2px rgba(0, 0, 0, 0.3)",
     },
   },
-  plugins: [],
+  plugins: [
+      plugin(function({ addUtilities }) {
+          addUtilities({
+              '.text-glow': {
+                  'text-shadow': '0 0 15px color-mix(in srgb, currentColor, transparent 50%)',
+              },
+          })
+      }),
+  ],
 }

@@ -50,7 +50,7 @@ export default function Intro({
     }, [quizMode]);
 
     return <section id="intro" className="min-h-screen snap-center max-w-prose p-4 pt-16 mx-auto">
-        <h1 className="text-center text-5xl py-4 font-bold">AI Art Turing Test</h1>
+        <h1 className="text-center text-5xl py-4 font-bold text-cyan-500 text-glow">AI Art Turing Test</h1>
 
         <p className="my-4">In this test you will be shown 50 works of art. About half
             were made by a human artist and half by an Artificial Intelligence (AI).

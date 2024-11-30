@@ -6,11 +6,13 @@ export default function Button({
     href,
     action,
     enabled=true,
+    glow=false,
     children,
 }: {
     href?: string,
     action?: () => void,
     enabled?: boolean,
+    glow?: boolean,
     children: ReactNode;
 }) {
     const classes = [
@@ -21,9 +23,26 @@ export default function Button({
         "select-none",
         "uppercase",
         "text-lg",
+        "transition-shadow",
+        "duration-150",
+        glow
+            ? ["shadow-glow",
+                "shadow-cyan-500"]
+            : [],
         enabled
-            ? ["text-stone-100", "bg-stone-700", "hover:text-stone-50", "hover:bg-stone-600", "cursor-pointer"]
-            : ["text-stone-600", "bg-stone-700", "cursor-default"],
+            ? ["text-stone-100",
+                "bg-ellipse-gradient",
+                "from-stone-700",
+                "from-0%",
+                "to-stone-800",
+                "to-100%",
+                "hover:text-stone-50",
+                "hover:from-stone-600",
+                "hover:to-stone-800",
+                "cursor-pointer"]
+            : ["text-stone-600",
+                "bg-stone-700",
+                "cursor-default"],
     ];
 
     return enabled && href

@@ -11,16 +11,25 @@ export default function CheckedButton({
     checked: boolean,
     children: ReactNode,
 }) {
-    return <Button action={action}>
+    return <Button action={action} glow={checked}>
         <div className="flex items-center">
             <span className={classNames(
                 "text-3xl",
-                "transition-opacity",
+                "transition-all",
                 {
                     "opacity-10": !checked,
+                    "text-cyan-500": checked,
+                    "text-glow": checked,
                 }
             )}>✓</span>
-            <span className="grow">{children}</span>
+            <span className={classNames(
+                "grow",
+                "transition-all",
+                "duration-75",
+                {
+                    "text-glow": checked,
+                }
+            )}>{children}</span>
         </div>
     </Button>;
 }

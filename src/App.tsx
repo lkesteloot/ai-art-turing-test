@@ -29,7 +29,7 @@ export default function App() {
         };
     }, []);
 
-    return <div className="bg-fixed bg-radial-gradient from-stone-900 from-0% via-stone-900 via-50% to-stone-950 to-100%">
+    return <div className="bg-fixed bg-circle-gradient from-stone-900 from-0% via-stone-900 via-50% to-stone-950 to-100%">
         <Intro userDb={userDb} setUserDb={setUserDb}/>
         {imageDb.images.map((_, id) => <ImageCard id={id} key={makeImageCardId(id)} userDb={userDb}
                                                   setUserDb={setUserDb}/>)}

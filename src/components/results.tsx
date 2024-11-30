@@ -1,5 +1,4 @@
 
-import type { React } from 'react';
 import imageDb, {getImageUrl, Image, makeImageCardId} from "../services/imagedb";
 import {UserDb} from "../services/userdb";
 import {Guess, isHumanToAnswer} from "../services/types";
@@ -28,7 +27,7 @@ function ImageGrid({
 
     return <>
         <h2 className="text-xl mt-8 mb-4">{results.length === 0
-            ? noResultsHeader()
+            ? noResultsHeader?.()
             : results.length === 1
                 ? oneResultHeader()
                 : multipleResultsHeader(results.length)}</h2>
@@ -58,7 +57,12 @@ export default function Results({
     }));
 
     return <section id="results" className="min-h-screen snap-center max-w-prose p-4 pt-16 mx-auto">
-        <h1 className="text-5xl py-4">Results</h1>
+        <h1 className="text-center text-5xl py-4 font-bold text-cyan-500 text-glow">Results</h1>
+
+        <ImageGrid results={results.filter(result => result.guess === "none")}
+                   oneResultHeader={() => "You haven't answered this one:"}
+                   multipleResultsHeader={count => `You haven't answered these ${count}:`}
+        />
 
         <ImageGrid results={results.filter(result => result.isCorrect)}
                    noResultsHeader={() => "You got none right!"}
