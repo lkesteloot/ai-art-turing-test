@@ -33,7 +33,7 @@ function ImageGrid({
                 ? oneResultHeader()
                 : multipleResultsHeader(results.length)}</h2>
 
-        <div className="grid grid-flow-col gap-4 w-fit my-4">
+        <div className="flex flex-wrap gap-4 my-4">
             {results.map(result => <div key={result.id}>
                 <a className="block w-32 h-32" href={"#" + makeImageCardId(result.id)}>
                     <img className="w-full h-full object-contain" src={getImageUrl(result.id, result.image)}
@@ -63,7 +63,7 @@ export default function Results({
         <ImageGrid results={results.filter(result => result.isCorrect)}
                    noResultsHeader={() => "You got none right!"}
                    oneResultHeader={() => "You got this one right:"}
-                   multipleResultsHeader={count => "You got these " + count + " right out of " + results.length + ":"}
+                   multipleResultsHeader={count => `You got these ${count} right out of ${results.length} (${Math.round(count / results.length * 100)}%):`}
         />
 
         <ImageGrid results={results.filter(result => !result.isCorrect && result.guess === "human")}
