@@ -4,6 +4,8 @@ import {UserDb} from "../services/userdb";
 import {Guess, isHumanToAnswer} from "../services/types";
 import Buttons from "./buttons.tsx";
 import Button from "./button.tsx";
+import {getResponsesPercentile} from "../services/responsesdb.ts";
+import {getOrdinalNumber} from "../services/utils.ts";
 
 interface Result {
     id: number,
@@ -28,7 +30,7 @@ function ImageGrid({
     }
 
     return <>
-        <h2 className="text-xl mt-8 mb-4">{results.length === 0
+        <h2 className="mt-8 mb-4">{results.length === 0
             ? noResultsHeader?.()
             : results.length === 1
                 ? oneResultHeader()
@@ -58,8 +60,15 @@ export default function Results({
         isCorrect: guess === isHumanToAnswer(imageDb.images[index].human),
     }));
 
+    const correctCount = results.filter(result => result.isCorrect).length;
+    const correctPercent = Math.round(correctCount / results.length * 100);
+    const correctPercentile = getResponsesPercentile(correctCount);
+
     return <section id="results" className="min-h-screen snap-center max-w-prose p-4 pt-16 mx-auto">
         <h1 className="text-center text-5xl py-4 font-bold text-cyan-500 text-glow">Results</h1>
+
+        <p>You got {correctCount} right out of {results.length}. That's {correctPercent}%,
+            which puts you at the {getOrdinalNumber(correctPercentile)} percentile.</p>
 
         <ImageGrid results={results.filter(result => result.guess === "none")}
                    oneResultHeader={() => "You haven't answered this one:"}
@@ -69,7 +78,7 @@ export default function Results({
         <ImageGrid results={results.filter(result => result.isCorrect)}
                    noResultsHeader={() => "You got none right!"}
                    oneResultHeader={() => "You got this one right:"}
-                   multipleResultsHeader={count => `You got these ${count} right out of ${results.length} (${Math.round(count / results.length * 100)}%):`}
+                   multipleResultsHeader={count => `You got these ${count} right:`}
         />
 
         <ImageGrid results={results.filter(result => !result.isCorrect && result.guess === "human")}
@@ -81,6 +90,8 @@ export default function Results({
                    oneResultHeader={() => "You thought this one was made by an AI, but it was made by a human:"}
                    multipleResultsHeader={count => "You thought these " + count + " were made by an AI, but they were made by a human:"}
         />
+
+        <div className="h-8"></div>
 
         <Buttons>
             <Button href={"#" + makeImageCardId(0)}>Review Your Guesses</Button>
