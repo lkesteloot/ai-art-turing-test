@@ -10,3 +10,7 @@ export function getResponsesPercentile(correctCount: number): number {
     const betterThan = arraySum(CORRECT_COUNTS.slice(0, correctCount)) + CORRECT_COUNTS[correctCount]/2;
     return Math.round(betterThan / TOTAL_RESPONDERS * 100);
 }
+
+export function questionPercentageRight(id: number): number {
+    return Math.round(responsesDb.question_correct_counts[id] / TOTAL_RESPONDERS * 100);
+}

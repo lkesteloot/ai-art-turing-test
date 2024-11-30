@@ -16,7 +16,10 @@ def main():
     title_to_image = dict((image["title"], image) for image in images)
     image_count = len(titles)
 
+    # Number of people who got this many correct:
     correct_counts = [0]*(len(titles) + 1)
+    # Number of people who got this one correct:
+    question_correct_counts = [0]*len(titles)
     header = None
     with open(os.path.join(script_dir, "responses.csv")) as f:
         for row_number, row in enumerate(csv.reader(f)):
@@ -43,9 +46,11 @@ def main():
                             his_grade = row[grade_column] == "1"
                             my_grade = guess != "" and (guess == "human") == image["human"]
                             if his_grade != my_grade and not TREAT_MISSING_AS_WRONG:
-                                print("Inconsistent grading:", row_number, title, guess, row[grade_column], his_grade, my_grade, sep="/")
+                                print("Inconsistent grading:", row_number, title,
+                                      guess, row[grade_column], his_grade, my_grade, sep="/")
                             if my_grade:
                                 correct_count += 1
+                                question_correct_counts[title_index] += 1
                             else:
                                 incorrect_titles.append(title)
                             count += 1
@@ -61,14 +66,22 @@ def main():
                                 if correct_count == 49:
                                     print("Only miss:", incorrect_titles)
 
-    if True:
+    if False:
+        # Chart number of people who got each score.
         print("Correct [domain]\tCount")
         for correct_count, user_count in enumerate(correct_counts):
+            print(correct_count, user_count)
+
+    if False:
+        # Chart number of people who got each question right.
+        print("Correct [domain]\tCount")
+        for correct_count, user_count in enumerate(sorted(question_correct_counts, reverse=True)):
             print(correct_count, user_count)
 
     with open(os.path.join(repo_dir, "src/data/responses.json"), "w") as f:
         responses = {
             "correct_counts": correct_counts,
+            "question_correct_counts": question_correct_counts,
         }
         json.dump(responses, f, indent=4, sort_keys=True)
 

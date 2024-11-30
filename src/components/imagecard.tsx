@@ -6,6 +6,7 @@ import db, {Image, getImageUrl, makeImageCardId} from "../services/imagedb";
 import {UserDb, withGuess} from "../services/userdb";
 import {Guess, isHumanToAnswer} from "../services/types";
 import {temporarilyDisableSnap} from "../services/utils.ts";
+import {questionPercentageRight} from "../services/responsesdb.ts";
 
 const QUESTION_COUNT = db.images.length;
 
@@ -77,10 +78,13 @@ export default function ImageCard({
                 <div>{image.attribution} {image.attributionUrl && <span><a href={image.attributionUrl} target="_blank"
                                                                            className="underline text-stone-500 whitespace-nowrap">More info</a></span>}</div>
                 {image.note && <div>{image.note}</div>}
+
+                <p>{questionPercentageRight(id)}% of people got this one right.</p>
             </>}
+
             <div className="grow"></div>
             <Buttons>
-                <Button href={nextUrl}>{nextLabel}</Button>
+            <Button href={nextUrl}>{nextLabel}</Button>
             </Buttons>
         </div>
     </section>;
