@@ -15,7 +15,7 @@ export default function Button({
 }) {
     const classes = [
         "p-4",
-        "rounded",
+        "rounded-lg",
         "font-bold",
         "text-center",
         "select-none",

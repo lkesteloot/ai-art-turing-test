@@ -73,7 +73,7 @@ export default function ImageCard({
                 { guess !== "none" && <div className={"text-center text-3xl font-bold pt-8 pb-4 " + (guessIsCorrect ? "text-green-500" : "text-red-500")}>
                     { guessIsCorrect ? "You’re right!" : "Nope!" }
                 </div> }
-                <div>{ image.attribution } { image.attributionUrl && <span><a href={image.attributionUrl} target="_blank" className="underline text-blue-600 whitespace-nowrap">More info</a></span> }</div>
+                <div>{ image.attribution } { image.attributionUrl && <span><a href={image.attributionUrl} target="_blank" className="underline text-stone-500 whitespace-nowrap">More info</a></span> }</div>
                 { image.note && <div>{image.note}</div> }
             </>}
             <div className="grow"></div>

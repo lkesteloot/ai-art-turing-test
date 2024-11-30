@@ -66,11 +66,11 @@ export default function Intro({
         </Buttons>
 
         <p className="mt-8 mb-4">The images in this test
-            were <a href="https://www.astralcodexten.com/p/ai-art-turing-test" className="underline text-blue-600"
+            were <a href="https://www.astralcodexten.com/p/ai-art-turing-test" className="underline text-stone-500"
                     target="_blank">collected by Scott Alexander</a>.
             All first-person statements in the answers are his.
             This website was put together
-            by <a href="https://www.teamten.com/lawrence/" className="underline text-blue-600" target="_blank">Lawrence
+            by <a href="https://www.teamten.com/lawrence/" className="underline text-stone-500" target="_blank">Lawrence
                 Kesteloot</a>.</p>
 
         <Buttons>
