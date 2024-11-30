@@ -10,9 +10,12 @@ export default function App() {
 
     useEffect(() => {
         function clickListener(e: Event) {
-            console.log(e.target);
-            const element = e.target as Element;
-            if (element.nodeName === "A") {
+            // Walk up the tree.
+            let element: Element | null = e.target as Element;
+            while (element !== null && element.nodeName !== "A") {
+                element = element.parentElement;
+            }
+            if (element !== null) {
                 const a = element as HTMLAnchorElement;
                 if (a.href !== "") {
                     document.documentElement.classList.remove("snap-y");

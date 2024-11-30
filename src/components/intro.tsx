@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import Buttons from "./buttons";
 import Button from "./button";
 import {makeImageCardId} from "./imagecard";
@@ -16,18 +17,20 @@ function ClearData({
         setUserDb(withNoGuesses(userDb));
     }
 
-    if (anyGuesses) {
-        return <>
-            <p>You seem to have taken this test before. If you’d like, you can reset
-            all of your guesses.</p>
+    return <div className={classNames(
+        anyGuesses ? "opacity-100" : "opacity-0",
+        anyGuesses ? "scale-100" : "scale-90",
+        "origin-center",
+        "transition-all",
+        "duration-400",
+    )}>
+        <p className="mt-12">You seem to have taken this test before. If you’d like, you can reset
+            all of your guesses:</p>
 
-            <Buttons>
-                <Button action={resetAnswers}>Reset Guesses</Button>
-            </Buttons>
-        </>;
-    } else {
-        return <></>;
-    }
+        <Buttons>
+            <Button action={resetAnswers}>Reset Guesses</Button>
+        </Buttons>
+    </div>;
 }
 
 export default function Intro({
@@ -46,14 +49,14 @@ export default function Intro({
         or an AI.</p>
 
         <p className="my-4">The images in this test
-            were <a href="https://www.astralcodexten.com/p/ai-art-turing-test" className="underline text-blue-700" target="_blank">collected by Scott Alexander</a>.
+            were <a href="https://www.astralcodexten.com/p/ai-art-turing-test" className="underline text-blue-600" target="_blank">collected by Scott Alexander</a>.
             This website was put together
-            by <a href="https://www.teamten.com/lawrence/" className="underline text-blue-700" target="_blank">Lawrence Kesteloot</a>.</p>
-
-        <ClearData userDb={userDb} setUserDb={setUserDb}/>
+            by <a href="https://www.teamten.com/lawrence/" className="underline text-blue-600" target="_blank">Lawrence Kesteloot</a>.</p>
 
         <Buttons>
             <Button href={"#" + makeImageCardId(0)}>Start Test</Button>
         </Buttons>
+
+        <ClearData userDb={userDb} setUserDb={setUserDb}/>
     </section>;
 }
