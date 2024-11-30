@@ -4,7 +4,7 @@ import {UserDb} from "../services/userdb";
 import {Guess, isHumanToAnswer} from "../services/types";
 import Buttons from "./buttons.tsx";
 import Button from "./button.tsx";
-import {getResponsesPercentile} from "../services/responsesdb.ts";
+import {getResponsesPercentile, TOTAL_RESPONDERS} from "../services/responsesdb.ts";
 import {getOrdinalNumber} from "../services/utils.ts";
 
 interface Result {
@@ -67,8 +67,10 @@ export default function Results({
     return <section id="results" className="min-h-screen snap-center max-w-prose p-4 pt-16 mx-auto">
         <h1 className="text-center text-5xl py-4 font-bold text-cyan-500 text-glow">Results</h1>
 
-        <p>You got {correctCount} right out of {results.length}. That's {correctPercent}%,
-            which puts you at the {getOrdinalNumber(correctPercentile)} percentile.</p>
+        <p className="my-4">You got {correctCount} right out of {results.length}.
+            That's {correctPercent}%,
+            which puts you at the {getOrdinalNumber(correctPercentile)} percentile of
+            the {TOTAL_RESPONDERS.toLocaleString()} people who took the test.</p>
 
         <ImageGrid results={results.filter(result => result.guess === "none")}
                    oneResultHeader={() => "You haven't answered this one:"}
