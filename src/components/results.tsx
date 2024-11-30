@@ -2,6 +2,8 @@
 import imageDb, {getImageUrl, Image, makeImageCardId} from "../services/imagedb";
 import {UserDb} from "../services/userdb";
 import {Guess, isHumanToAnswer} from "../services/types";
+import Buttons from "./buttons.tsx";
+import Button from "./button.tsx";
 
 interface Result {
     id: number,
@@ -79,5 +81,9 @@ export default function Results({
                    oneResultHeader={() => "You thought this one was made by an AI, but it was made by a human:"}
                    multipleResultsHeader={count => "You thought these " + count + " were made by an AI, but they were made by a human:"}
         />
+
+        <Buttons>
+            <Button href={"#" + makeImageCardId(0)}>Review Your Guesses</Button>
+        </Buttons>
     </section>;
 }
