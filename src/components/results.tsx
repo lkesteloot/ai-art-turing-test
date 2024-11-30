@@ -1,9 +1,8 @@
 
 import type { React } from 'react';
-import imageDb, {getImageUrl, Image} from "../services/imagedb";
+import imageDb, {getImageUrl, Image, makeImageCardId} from "../services/imagedb";
 import {UserDb} from "../services/userdb";
 import {Guess, isHumanToAnswer} from "../services/types";
-import {makeImageCardId} from "./imagecard.tsx";
 
 interface Result {
     id: number,

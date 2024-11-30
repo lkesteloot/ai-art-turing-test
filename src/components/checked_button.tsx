@@ -17,7 +17,7 @@ export default function CheckedButton({
                 "text-3xl",
                 "transition-opacity",
                 {
-                    "opacity-30": !checked,
+                    "opacity-10": !checked,
                 }
             )}>✓</span>
             <span className="text-lg grow">{children}</span>

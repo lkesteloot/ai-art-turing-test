@@ -3,15 +3,11 @@ import { useState } from "react";
 import Buttons from "./buttons";
 import Button from "./button";
 import CheckedButton from "./checked_button";
-import db, { Image, getImageUrl } from "../services/imagedb";
+import db, {Image, getImageUrl, makeImageCardId} from "../services/imagedb";
 import {UserDb, withGuess} from "../services/userdb";
-import {Guess, GUESS_TO_STRING, isHumanToAnswer} from "../services/types";
+import {Guess, isHumanToAnswer} from "../services/types";
 
 const QUESTION_COUNT = db.images.length;
-
-export function makeImageCardId(id: number): string {
-    return "image-" + id;
-}
 
 export default function ImageCard({
     id,
@@ -30,6 +26,7 @@ export default function ImageCard({
 
     const image = db.images[id] as Image;
     const guess = userDb.guesses[id];
+    const guessIsCorrect = guess === isHumanToAnswer(image.human);
 
     function vote(newGuess: Guess) {
         if (newGuess !== "none" && newGuess === guess) {
@@ -43,7 +40,7 @@ export default function ImageCard({
         <div className="grow max-h-screen">
             <img className="w-full h-full object-contain" src={getImageUrl(id, image)} alt={image.title}/>
         </div>
-        <div className="w-96 p-4">
+        <div className="w-96 p-4 flex flex-col gap-4">
             <div className="text-center">
                 <span className="font-bold text-lg">{image.title}</span> {" "}
                 <span className="text-gray-400">({id + 1} of {QUESTION_COUNT})</span>
@@ -59,12 +56,13 @@ export default function ImageCard({
                 </Buttons>
             }
             {showAnswer && <>
-                <div>Your answer: {GUESS_TO_STRING[guess]}</div>
-                <div>Actual answer: {GUESS_TO_STRING[isHumanToAnswer(image.human)]}</div>
-                <div>Attribution: { image.attribution } { image.attributionUrl && <span>(<a href={image.attributionUrl} target="_blank" className="underline text-blue-700 dark:text-blue-500">Original</a>)</span> }
-                </div>
+                { guess !== "none" && <div className={"text-center text-3xl font-bold pt-8 pb-4 " + (guessIsCorrect ? "text-green-500" : "text-red-500")}>
+                    { guessIsCorrect ? "You’re right!" : "Nope!" }
+                </div> }
+                <div>{ image.attribution } { image.attributionUrl && <span><a href={image.attributionUrl} target="_blank" className="underline text-blue-600 whitespace-nowrap">More info</a></span> }</div>
                 { image.note && <div>{image.note}</div> }
             </>}
+            <div className="grow"></div>
             <Buttons>
                 { id < QUESTION_COUNT - 1
                     ? <Button href={"#" + makeImageCardId(id + 1)}>Next</Button>

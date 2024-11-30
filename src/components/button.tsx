@@ -1,5 +1,6 @@
 
-import {ReactNode} from "react";
+import type {ReactNode} from "react";
+import classNames from "classnames";
 
 export default function Button({
     href,
@@ -12,12 +13,18 @@ export default function Button({
     enabled?: boolean,
     children: ReactNode;
 }) {
-    const commonClasses = "p-4 rounded font-bold text-center";
-    const colorClasses = enabled
-        ? "text-white bg-teal-400 hover:bg-teal-300"
-        : "text-gray-300 bg-gray-400";
+    const classes = [
+        "p-4",
+        "rounded",
+        "font-bold",
+        "text-center",
+        "select-none",
+        enabled
+            ? ["text-stone-100", "bg-stone-700", "hover:text-stone-50", "hover:bg-stone-600", "cursor-pointer"]
+            : ["text-stone-600", "bg-stone-700", "cursor-default"],
+    ];
 
     return enabled && href
-        ? <a href={href} className={commonClasses + " " + colorClasses}>{children}</a>
-        : <span onClick={enabled ? action : () => {}} className={commonClasses + " " + colorClasses + " cursor-pointer select-none"}>{children}</span>;
+        ? <a href={href} className={classNames(classes)}>{children}</a>
+        : <span onClick={enabled ? action : () => {}} className={classNames(classes)}>{children}</span>;
 }
