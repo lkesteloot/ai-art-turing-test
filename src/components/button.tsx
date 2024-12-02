@@ -7,12 +7,14 @@ export default function Button({
     action,
     enabled=true,
     glow=false,
+    emoji,
     children,
 }: {
     href?: string,
     action?: () => void,
     enabled?: boolean,
     glow?: boolean,
+    emoji?: string,
     children: ReactNode;
 }) {
     const classes = [
@@ -25,6 +27,9 @@ export default function Button({
         "text-lg",
         "transition-shadow",
         "duration-150",
+        "flex",
+        "items-center",
+        "justify-center",
         glow
             ? ["shadow-glow",
                 "shadow-cyan-500"]
@@ -45,7 +50,28 @@ export default function Button({
                 "cursor-default"],
     ];
 
-    return enabled && href
-        ? <a href={href} className={classNames(classes)}>{children}</a>
-        : <span onClick={enabled ? action : () => {}} className={classNames(classes)}>{children}</span>;
+    if (!enabled) {
+        action = () => {};
+    }
+
+    let emojiNode = undefined;
+    if (emoji !== undefined) {
+        emojiNode = <span className="relative ml-4">
+            <span className="text-3xl absolute translate-y-[-50%]">
+                {emoji}
+            </span>
+        </span>;
+    }
+
+    if (enabled && href) {
+        return <a href={href} className={classNames(classes)}>
+            {children}
+            {emojiNode}
+        </a>;
+    } else {
+        return <span onClick={action} className={classNames(classes)}>
+            {children}
+            {emojiNode}
+        </span>;
+    }
 }

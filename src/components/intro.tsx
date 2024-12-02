@@ -31,7 +31,7 @@ function ClearData({
             all of your guesses:</p>
 
         <Buttons>
-            <Button action={resetAnswers}>Reset Guesses</Button>
+            <Button action={resetAnswers} emoji="🧹">Reset Guesses</Button>
         </Buttons>
     </div>;
 }
@@ -74,7 +74,7 @@ export default function Intro({
                 Kesteloot</a>.</p>
 
         <Buttons>
-            <Button href={"#" + makeImageCardId(0)}>Start Test</Button>
+            <Button href={"#" + makeImageCardId(0)} emoji="🚀">Start Test</Button>
         </Buttons>
 
         <ClearData userDb={userDb} setUserDb={setUserDb}/>

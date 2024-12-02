@@ -16,30 +16,28 @@ interface Result {
 
 function ImageGrid({
                        results,
-                       noResultsHeader,
                        oneResultHeader,
                        multipleResultsHeader,
                    }: {
     results: Result[],
-    noResultsHeader?: () => string,
     oneResultHeader: () => string,
     multipleResultsHeader: (count: number) => string,
 }) {
-    if (results.length === 0 && noResultsHeader === undefined) {
+    if (results.length === 0) {
         return;
     }
 
+    const header = results.length === 1
+        ? oneResultHeader()
+        : multipleResultsHeader(results.length);
+
     return <>
-        <h2 className="mt-8 mb-4">{results.length === 0
-            ? noResultsHeader?.()
-            : results.length === 1
-                ? oneResultHeader()
-                : multipleResultsHeader(results.length)}</h2>
+        <h2 className="mt-8 mb-4">{header}</h2>
 
         <div className="flex flex-wrap gap-4 my-4">
             {results.map(result => <div key={result.id}>
                 <a className="block w-32 h-32" href={"#" + makeImageCardId(result.id)}>
-                    <img className="w-full h-full object-contain" src={getImageUrl(result.id, result.image)}
+                    <img className="w-full h-full object-cover" src={getImageUrl(result.id, result.image)}
                          alt={result.image.title}/>
                 </a>
             </div>)}
@@ -118,7 +116,6 @@ export default function Results({
         />
 
         <ImageGrid results={results.filter(result => result.isCorrect)}
-                   noResultsHeader={() => "You got none right!"}
                    oneResultHeader={() => "You got this one right:"}
                    multipleResultsHeader={count => `You got these ${count} right:`}
         />
@@ -136,7 +133,9 @@ export default function Results({
         <div className="h-8"></div>
 
         <Buttons>
-            <Button href={"#" + makeImageCardId(0)}>Review Your Guesses</Button>
+            <Button href={"#" + makeImageCardId(0)} emoji="👀">Review Your Guesses</Button>
         </Buttons>
+
+        <div className="h-8"></div>
     </section>;
 }

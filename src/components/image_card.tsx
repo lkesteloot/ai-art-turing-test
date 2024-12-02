@@ -9,6 +9,7 @@ import {temporarilyDisableSnap} from "../services/utils.ts";
 import {questionPercentageRight} from "../services/responsesdb.ts";
 
 const QUESTION_COUNT = db.images.length;
+const SHOW_CHOICE_EMOJI = false;
 
 export default function ImageCard({
     id,
@@ -29,6 +30,7 @@ export default function ImageCard({
     const isLastQuestion = id === QUESTION_COUNT - 1;
     const nextUrl = isLastQuestion ? "#results" : "#" + makeImageCardId(id + 1);
     const nextLabel = isLastQuestion ? "Results" : "Next";
+    const nextEmoji = isLastQuestion ? "👀" : "🦘";
     let showAnswer: boolean;
     switch (userDb.quizMode) {
         case "reveal":
@@ -57,7 +59,7 @@ export default function ImageCard({
 
     return <section id={makeImageCardId(id)} className="min-h-screen flex snap-center">
         <div className="grow max-h-screen">
-            <img className="w-full h-full object-contain" src={getImageUrl(id, image)} alt={image.title}/>
+            <img className="w-full h-full object-contain bg-stone-800" src={getImageUrl(id, image)} alt={image.title}/>
         </div>
         <div className="w-96 p-4 flex flex-col gap-4">
             <div className="text-center pb-8">
@@ -66,14 +68,14 @@ export default function ImageCard({
             </div>
 
             <Buttons>
-                <CheckedButton action={() => vote("human")} checked={guess === "human"}>Human</CheckedButton>
-                <CheckedButton action={() => vote("ai")} checked={guess === "ai"}>AI</CheckedButton>
+                <CheckedButton action={() => vote("human")} checked={guess === "human"} emoji={SHOW_CHOICE_EMOJI ? "🧑‍🎨" : undefined}>Human</CheckedButton>
+                <CheckedButton action={() => vote("ai")} checked={guess === "ai"} emoji={SHOW_CHOICE_EMOJI ? "🤖" : undefined}>AI</CheckedButton>
             </Buttons>
 
             {showAnswer && <>
                 {guess !== "none" && <div
                     className={"text-center text-3xl font-bold pt-8 pb-4 " + (guessIsCorrect ? "text-green-500" : "text-red-500")}>
-                    {guessIsCorrect ? "You’re right!" : "Nope!"}
+                    {guessIsCorrect ? "You’re right! 🔥" : "Nope! 😭"}
                 </div>}
                 <div>{image.attribution} {image.attributionUrl && <span><a href={image.attributionUrl} target="_blank"
                                                                            className="underline text-stone-500 whitespace-nowrap">More info</a></span>}</div>
@@ -84,7 +86,7 @@ export default function ImageCard({
 
             <div className="grow"></div>
             <Buttons>
-            <Button href={nextUrl}>{nextLabel}</Button>
+                <Button href={nextUrl} emoji={nextEmoji}>{nextLabel}</Button>
             </Buttons>
         </div>
     </section>;

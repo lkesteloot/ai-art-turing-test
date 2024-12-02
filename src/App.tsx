@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import imageDb, {makeImageCardId} from "./services/imagedb";
-import ImageCard from "./components/imagecard";
+import ImageCard from "./components/image_card.tsx";
 import Intro from "./components/intro";
 import Results from "./components/results";
 import {useUserDb} from "./services/userdb";
