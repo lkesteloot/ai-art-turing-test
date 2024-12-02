@@ -25,3 +25,11 @@ export function getOrdinalNumber(n: number): string {
 export function arraySum(a: number[]): number {
     return a.reduce((sum, value) => sum + value, 0);
 }
+
+export function scrollToSelector(selector: string): void {
+    const node = document.querySelector(selector);
+    node.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+    });
+}

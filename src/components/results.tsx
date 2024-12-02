@@ -5,13 +5,20 @@ import {Guess, isHumanToAnswer} from "../services/types";
 import Buttons from "./buttons.tsx";
 import Button from "./button.tsx";
 import {CORRECT_COUNTS, getResponsesPercentile, TOTAL_RESPONDERS} from "../services/responsesdb.ts";
-import {getOrdinalNumber} from "../services/utils.ts";
+import {getOrdinalNumber, scrollToSelector} from "../services/utils.ts";
 
 interface Result {
     id: number,
     guess: Guess,
     image: Image,
     isCorrect: boolean,
+}
+
+function Thumbnail({ result }: { result: Result }) {
+    return <img className="w-32 h-32 object-cover cursor-pointer"
+                src={getImageUrl(result.id, result.image)}
+                alt={result.image.title}
+                onClick={() => scrollToSelector("#" + makeImageCardId(result.id))}/>;
 }
 
 function ImageGrid({
@@ -35,12 +42,7 @@ function ImageGrid({
         <h2 className="mt-8 mb-4">{header}</h2>
 
         <div className="flex flex-wrap gap-4 my-4">
-            {results.map(result => <div key={result.id}>
-                <a className="block w-32 h-32" href={"#" + makeImageCardId(result.id)}>
-                    <img className="w-full h-full object-cover" src={getImageUrl(result.id, result.image)}
-                         alt={result.image.title}/>
-                </a>
-            </div>)}
+            {results.map(result => <Thumbnail key={result.id} result={result}/>)}
         </div>
     </>;
 }
@@ -115,9 +117,14 @@ export default function Results({
                    multipleResultsHeader={count => `You haven't answered these ${count}:`}
         />
 
-        <ImageGrid results={results.filter(result => result.isCorrect)}
-                   oneResultHeader={() => "You got this one right:"}
-                   multipleResultsHeader={count => `You got these ${count} right:`}
+        <ImageGrid results={results.filter(result => result.isCorrect && result.guess === "human")}
+                   oneResultHeader={() => "You correctly identified this one as made by a human:"}
+                   multipleResultsHeader={count => `You correctly identified these ${count} as made by a human:`}
+        />
+
+        <ImageGrid results={results.filter(result => result.isCorrect && result.guess === "ai")}
+                   oneResultHeader={() => "You correctly identified this one as made by an AI:"}
+                   multipleResultsHeader={count => `You correctly identified these ${count} as made by an AI:`}
         />
 
         <ImageGrid results={results.filter(result => !result.isCorrect && result.guess === "human")}
@@ -133,7 +140,7 @@ export default function Results({
         <div className="h-8"></div>
 
         <Buttons>
-            <Button href={"#" + makeImageCardId(0)} emoji="👀">Review Your Guesses</Button>
+            <Button action={() => scrollToSelector("#" + makeImageCardId(0))} emoji="👀">Review Your Guesses</Button>
         </Buttons>
 
         <div className="h-8"></div>

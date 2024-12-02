@@ -6,6 +6,7 @@ import {UserDb, withNoGuesses, withQuizMode} from "../services/userdb";
 import {makeImageCardId} from "../services/imagedb.ts";
 import CheckedButton from "./checked_button.tsx";
 import {QuizMode} from "../services/types.ts";
+import {scrollToSelector} from "../services/utils.ts";
 
 function ClearData({
                        userDb,
@@ -74,7 +75,7 @@ export default function Intro({
                 Kesteloot</a>.</p>
 
         <Buttons>
-            <Button href={"#" + makeImageCardId(0)} emoji="🚀">Start Test</Button>
+            <Button action={() => scrollToSelector("#" + makeImageCardId(0))} emoji="🚀">Start Test</Button>
         </Buttons>
 
         <ClearData userDb={userDb} setUserDb={setUserDb}/>

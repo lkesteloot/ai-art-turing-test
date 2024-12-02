@@ -5,7 +5,7 @@ import CheckedButton from "./checked_button";
 import db, {Image, getImageUrl, makeImageCardId} from "../services/imagedb";
 import {UserDb, withGuess} from "../services/userdb";
 import {Guess, isHumanToAnswer} from "../services/types";
-import {temporarilyDisableSnap} from "../services/utils.ts";
+import {scrollToSelector} from "../services/utils.ts";
 import {questionPercentageRight} from "../services/responsesdb.ts";
 
 const QUESTION_COUNT = db.images.length;
@@ -28,7 +28,7 @@ export default function ImageCard({
     const guess = userDb.guesses[id];
     const guessIsCorrect = guess === isHumanToAnswer(image.human);
     const isLastQuestion = id === QUESTION_COUNT - 1;
-    const nextUrl = isLastQuestion ? "#results" : "#" + makeImageCardId(id + 1);
+    const nextSelector = isLastQuestion ? "#results" : "#" + makeImageCardId(id + 1);
     const nextLabel = isLastQuestion ? "Results" : "Next";
     const nextEmoji = isLastQuestion ? "👀" : "🦘";
     let showAnswer: boolean;
@@ -52,8 +52,9 @@ export default function ImageCard({
         }
         setUserDb(withGuess(userDb, id, newGuess));
         if (newGuess !== "none" && userDb.quizMode === "advance") {
-            temporarilyDisableSnap();
-            window.location.href = nextUrl;
+            // Can't do it right away because updating the DB causes React
+            // to mess with the DOM in a way that interferes with the scrolling.
+            setTimeout(() => scrollToSelector(nextSelector), 0);
         }
     }
 
@@ -86,7 +87,7 @@ export default function ImageCard({
 
             <div className="grow"></div>
             <Buttons>
-                <Button href={nextUrl} emoji={nextEmoji}>{nextLabel}</Button>
+                <Button action={() => scrollToSelector(nextSelector)} emoji={nextEmoji}>{nextLabel}</Button>
             </Buttons>
         </div>
     </section>;
