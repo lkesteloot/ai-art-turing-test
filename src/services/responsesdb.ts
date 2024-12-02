@@ -2,7 +2,7 @@
 import responsesDb from "../data/responses.json";
 import {arraySum} from "./utils.ts";
 
-const CORRECT_COUNTS: number[] = responsesDb.correct_counts;
+export const CORRECT_COUNTS: number[] = responsesDb.correct_counts;
 export const TOTAL_RESPONDERS = arraySum(CORRECT_COUNTS);
 
 export function getResponsesPercentile(correctCount: number): number {

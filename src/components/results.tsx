@@ -4,7 +4,7 @@ import {UserDb} from "../services/userdb";
 import {Guess, isHumanToAnswer} from "../services/types";
 import Buttons from "./buttons.tsx";
 import Button from "./button.tsx";
-import {getResponsesPercentile, TOTAL_RESPONDERS} from "../services/responsesdb.ts";
+import {CORRECT_COUNTS, getResponsesPercentile, TOTAL_RESPONDERS} from "../services/responsesdb.ts";
 import {getOrdinalNumber} from "../services/utils.ts";
 
 interface Result {
@@ -47,6 +47,44 @@ function ImageGrid({
     </>;
 }
 
+function Chart({ correctCount }: { correctCount: number }) {
+    const WIDTH = 500;
+    const HEIGHT = 300;
+    const MARGIN = 5;
+    const correctToX = (value: number) => Math.round(value*(WIDTH - 2*MARGIN)/CORRECT_COUNTS.length + MARGIN);
+    const countToY = (value: number) => Math.round(HEIGHT - 2*MARGIN - value/maxResult*(HEIGHT - 2*MARGIN) + MARGIN)
+    const maxResult = Math.max(... CORRECT_COUNTS);
+    const percentilePath = "M " + CORRECT_COUNTS
+        .map((count, correct) => `${correctToX(correct)} ${countToY(count)}`)
+        .join(" L ");
+
+    return <svg xmlns="http://www.w3.org/2000/svg"
+                width={WIDTH}
+                height={HEIGHT}
+                viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
+                strokeLinecap="round"
+                className="stroke-stone-500 fill-none stroke-2 mx-auto my-8">
+
+        <defs>
+            <filter id="glow" filterUnits="userSpaceOnUse">
+                <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+                <feMerge>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+            </filter>
+        </defs>
+
+        <path d={percentilePath} filter="url(#glow)"/>
+        <line x1={correctToX(correctCount)}
+              y1={MARGIN}
+              x2={correctToX(correctCount)}
+              y2={HEIGHT - MARGIN}
+              className="stroke-cyan-500"
+              filter="url(#glow)"/>
+    </svg>;
+}
+
 export default function Results({
                                     userDb,
                                 }: {
@@ -71,6 +109,8 @@ export default function Results({
             That's {correctPercent}%,
             which puts you at the {getOrdinalNumber(correctPercentile)} percentile of
             the {TOTAL_RESPONDERS.toLocaleString()} people who took the test.</p>
+
+        <Chart correctCount={correctCount}/>
 
         <ImageGrid results={results.filter(result => result.guess === "none")}
                    oneResultHeader={() => "You haven't answered this one:"}
