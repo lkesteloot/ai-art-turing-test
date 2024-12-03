@@ -63,7 +63,7 @@ function Chart({ correctCount }: { correctCount: number }) {
                 height={HEIGHT}
                 viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
                 strokeLinecap="round"
-                className="stroke-stone-500 fill-none stroke-2 mx-auto my-8">
+                className="stroke-stone-500 fill-none stroke-2 mx-auto my-8 max-w-full">
 
         <defs>
             <filter id="glow" filterUnits="userSpaceOnUse">

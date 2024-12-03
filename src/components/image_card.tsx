@@ -58,11 +58,11 @@ export default function ImageCard({
         }
     }
 
-    return <section id={makeImageCardId(id)} className="min-h-screen flex snap-center">
-        <div className="grow max-h-screen">
-            <img className="w-full h-full object-contain bg-stone-800" src={getImageUrl(id, image)} alt={image.title}/>
+    return <section id={makeImageCardId(id)} className="min-h-screen flex flex-row portrait:flex-col snap-center">
+        <div className="grow max-h-screen relative">
+            <img className="w-full h-full object-contain bg-stone-800 absolute inset-0" src={getImageUrl(id, image)} alt={image.title}/>
         </div>
-        <div className="w-96 p-4 flex flex-col gap-4">
+        <div className="w-96 p-4 flex flex-col gap-4 max-h-screen overflow-y-auto portrait:self-center portrait:max-h-[50vh]">
             <div className="text-center pb-8">
                 <div className="font-bold text-lg">{image.title}</div>
                 <div className="text-gray-500">{id + 1} of {QUESTION_COUNT}</div>
