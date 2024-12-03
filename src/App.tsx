@@ -4,6 +4,9 @@ import Intro from "./components/intro";
 import Results from "./components/results";
 import {useUserDb} from "./services/userdb";
 
+/**
+ * Component for the top-level app.
+ */
 export default function App() {
     const [userDb, setUserDb] = useUserDb();
 

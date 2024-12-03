@@ -8,13 +8,9 @@ const ORDINAL_SUFFIXES = new Map([
 
 const ORDINAL_PLURAL_RULES = new Intl.PluralRules("en-US", { type: "ordinal" });
 
-export function temporarilyDisableSnap() {
-    document.documentElement.classList.remove("snap-y");
-    setTimeout(() => {
-        document.documentElement.classList.add("snap-y");
-    }, 1000);
-}
-
+/**
+ * Given a number, return the ordinal version of it (e.g., 22 will return "22nd").
+ */
 export function getOrdinalNumber(n: number): string {
     const rule = ORDINAL_PLURAL_RULES.select(n);
     const suffix = ORDINAL_SUFFIXES.get(rule);
@@ -22,10 +18,16 @@ export function getOrdinalNumber(n: number): string {
     return `${n}${suffix}`;
 }
 
+/**
+ * Get the sum of the numbers in the array.
+ */
 export function arraySum(a: number[]): number {
     return a.reduce((sum, value) => sum + value, 0);
 }
 
+/**
+ * Scroll smoothly to the node with the given selector.
+ */
 export function scrollToSelector(selector: string): void {
     const node = document.querySelector(selector);
     node.scrollIntoView({

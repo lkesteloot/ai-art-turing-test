@@ -1,6 +1,9 @@
 
 import { useState, useEffect } from "react";
 
+/**
+ * Hook that works like `useState()` but stores the value in local storage.
+ */
 export function useLocalStorage<T>(storageKey: string, initialValue: T | (() => T)): [T, (newValue: T) => void] {
     const [value, setValue] = useState<T>(() => {
         const valueString = typeof window === "undefined"

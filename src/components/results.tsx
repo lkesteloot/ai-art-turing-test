@@ -7,13 +7,23 @@ import Button from "./button.tsx";
 import {CORRECT_COUNTS, getResponsesPercentile, TOTAL_RESPONDERS} from "../services/responsesdb.ts";
 import {getOrdinalNumber, scrollToSelector} from "../services/utils.ts";
 
+/**
+ * Information about each question answered.
+ */
 interface Result {
+    // ID of the photo (0 to 49).
     id: number,
+    // The user's guess.
     guess: Guess,
+    // The image shown.
     image: Image,
+    // Whether the user got this one right.
     isCorrect: boolean,
 }
 
+/**
+ * Component to show a thumbnail of an image.
+ */
 function Thumbnail({ result }: { result: Result }) {
     return <img className="w-32 h-32 object-cover cursor-pointer"
                 src={getImageUrl(result.id, result.image)}
@@ -21,6 +31,9 @@ function Thumbnail({ result }: { result: Result }) {
                 onClick={() => scrollToSelector("#" + makeImageCardId(result.id))}/>;
 }
 
+/**
+ * Show a grid of images with a header.
+ */
 function ImageGrid({
                        results,
                        oneResultHeader,
@@ -34,9 +47,7 @@ function ImageGrid({
         return;
     }
 
-    const header = results.length === 1
-        ? oneResultHeader()
-        : multipleResultsHeader(results.length);
+    const header = results.length === 1 ? oneResultHeader() : multipleResultsHeader(results.length);
 
     return <>
         <h2 className="mt-8 mb-4">{header}</h2>
@@ -47,6 +58,9 @@ function ImageGrid({
     </>;
 }
 
+/**
+ * Show a histogram of responses and plot the user's location in it.
+ */
 function Chart({ correctCount }: { correctCount: number }) {
     const WIDTH = 500;
     const HEIGHT = 300;
@@ -85,6 +99,9 @@ function Chart({ correctCount }: { correctCount: number }) {
     </svg>;
 }
 
+/**
+ * Component to show the user their score and how they did on each photo.
+ */
 export default function Results({
                                     userDb,
                                 }: {

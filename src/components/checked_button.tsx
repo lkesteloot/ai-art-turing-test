@@ -2,6 +2,9 @@ import Button from "./button";
 import classNames from "classnames";
 import {ReactNode} from "react";
 
+/**
+ * A button that can have a checkmark on it.
+ */
 export default function CheckedButton({
                            action,
                            checked,

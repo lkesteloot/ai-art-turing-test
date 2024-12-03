@@ -1,9 +1,17 @@
 
+"""
+Analyze the Excel file published by Scott Alexander, analyze the responses,
+and generate source files used in the website for statistics.
+"""
+
 import os
 import collections
 import csv
 import json
 
+# Scott originally didn't count unanswered questions, but this isn't fair
+# because people can increase their score by not answering questions
+# they're unsure about. We score missing answers as wrong.
 TREAT_MISSING_AS_WRONG = True
 
 def main():
@@ -66,18 +74,21 @@ def main():
                                 if correct_count == 49:
                                     print("Only miss:", incorrect_titles)
 
+    # For Plotter graphing.
     if False:
         # Chart number of people who got each score.
         print("Correct [domain]\tCount")
         for correct_count, user_count in enumerate(correct_counts):
             print(correct_count, user_count)
 
+    # For Plotter graphing.
     if False:
         # Chart number of people who got each question right.
         print("Correct [domain]\tCount")
         for correct_count, user_count in enumerate(sorted(question_correct_counts, reverse=True)):
             print(correct_count, user_count)
 
+    # Generate code used in site.
     with open(os.path.join(repo_dir, "src/data/responses.json"), "w") as f:
         responses = {
             "correct_counts": correct_counts,

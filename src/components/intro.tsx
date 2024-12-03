@@ -8,6 +8,9 @@ import CheckedButton from "./checked_button.tsx";
 import {QuizMode} from "../services/types.ts";
 import {scrollToSelector} from "../services/utils.ts";
 
+/**
+ * Panel that gives the user the chance to clear their guesses.
+ */
 function ClearData({
                        userDb,
                        setUserDb
@@ -37,6 +40,9 @@ function ClearData({
     </div>;
 }
 
+/**
+ * Full-screen panel to introduce the quiz to the user and choose the quiz mode.
+ */
 export default function Intro({
                                   userDb,
                                   setUserDb

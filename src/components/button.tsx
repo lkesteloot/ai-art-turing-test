@@ -2,6 +2,9 @@
 import type {ReactNode} from "react";
 import classNames from "classnames";
 
+/**
+ * A simple button. Can be a link or an action.
+ */
 export default function Button({
     href,
     action,

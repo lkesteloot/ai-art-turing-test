@@ -11,6 +11,9 @@ import {questionPercentageRight} from "../services/responsesdb.ts";
 const QUESTION_COUNT = db.images.length;
 const SHOW_CHOICE_EMOJI = false;
 
+/**
+ * Full-screen card to show an image and get the guess from the user.
+ */
 export default function ImageCard({
     id,
     userDb,
@@ -44,7 +47,7 @@ export default function ImageCard({
             break;
     }
 
-
+    // Update the user's guess on this question.
     function vote(newGuess: Guess) {
         if (newGuess !== "none" && newGuess === guess) {
             // Unset answer.
