@@ -30,7 +30,7 @@ export function arraySum(a: number[]): number {
  */
 export function scrollToSelector(selector: string): void {
     const node = document.querySelector(selector);
-    node.scrollIntoView({
+    node?.scrollIntoView({
         behavior: "smooth",
         block: "start",
     });
