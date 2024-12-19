@@ -27,8 +27,8 @@ export default imageDb as ImageDb;
  * Get the URL for the image itself.
  */
 export function getImageUrl(id: number, image: Image): string {
-    return "/images/" + id + "." + image.extension;
-    // return image.url;
+    return "https://www.teamten.com/lawrence/ai-art-turing-test-images/" +
+        id + "." + image.extension;
 }
 
 /**
