@@ -12,6 +12,8 @@ export interface Image {
     attributionUrl?: string;
     note?: string;
     extension: string;
+    width: number;
+    height: number;
 }
 
 /**

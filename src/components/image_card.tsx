@@ -63,7 +63,7 @@ export default function ImageCard({
 
     return <section id={makeImageCardId(id)} className="min-h-screen flex flex-row portrait:flex-col snap-center">
         <div className="grow max-h-screen relative">
-            <img className="w-full h-full object-contain bg-stone-800 absolute inset-0" src={getImageUrl(id, image)} alt={image.title}/>
+            <img className="w-full h-full object-contain bg-stone-800 absolute inset-0" src={getImageUrl(id, image)} alt={image.title} width={image.width} height={image.height} loading="lazy"/>
         </div>
         <div className="w-96 p-4 flex flex-col gap-4 max-h-screen overflow-y-auto portrait:self-center portrait:max-h-[50vh]">
             <div className="text-center pb-8">
