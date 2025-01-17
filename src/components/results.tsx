@@ -1,4 +1,5 @@
 
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import imageDb, {getImageUrl, Image, makeImageCardId} from "../services/imagedb";
 import {UserDb} from "../services/userdb";
 import {Guess, isHumanToAnswer} from "../services/types";
@@ -25,7 +26,7 @@ interface Result {
  * Component to show a thumbnail of an image.
  */
 function Thumbnail({ result }: { result: Result }) {
-    return <img className="w-32 h-32 object-cover cursor-pointer"
+    return <LazyLoadImage className="w-32 h-32 object-cover cursor-pointer"
                 src={getImageUrl(result.id, result.image)}
                 alt={result.image.title}
                 onClick={() => scrollToSelector("#" + makeImageCardId(result.id))}/>;
