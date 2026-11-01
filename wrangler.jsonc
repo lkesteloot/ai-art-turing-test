@@ -1,0 +1,9 @@
+// Cloudflare Workers config. Serves the Vite build output as static files.
+// Deploy with "npm run deploy".
+{
+  "name": "ai-art-turing-test",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./dist"
+  }
+}

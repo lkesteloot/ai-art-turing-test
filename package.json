@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "deploy": "npm run build && rsync -a dist/ lk@hitch.headcode.com:ai-art-turing-test-website"
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
     "classnames": "^2.5.1",
