@@ -3,6 +3,10 @@
 {
   "name": "ai-art-turing-test",
   "compatibility_date": "2026-11-01",
+  // No per-version preview URLs: old versions shouldn't stay reachable.
+  "preview_urls": false,
+  // Only serve at the real domain, not at *.workers.dev.
+  "workers_dev": false,
   "assets": {
     "directory": "./dist"
   }
